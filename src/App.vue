@@ -1,12 +1,11 @@
 <template>
-  <layout>
-    <router-view />
-  </layout>
-  <!--v-app>
+  <v-app>
     <v-main>
-      <router-view />
+      <layout>
+        <router-view />
+      </layout>
     </v-main>
-  </v-app>-->
+  </v-app>
 </template>
 
 <script lang="ts">
