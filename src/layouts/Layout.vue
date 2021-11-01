@@ -6,12 +6,13 @@
 
 <script>
 import LayoutDefault from '@/layouts/LayoutDefault';
+import { shallowRef } from 'vue';
 
 export default {
   name: 'Layout',
   data: () => {
     return {
-      layout: LayoutDefault,
+      layout: shallowRef(LayoutDefault),
     };
   },
   watch: {
@@ -20,9 +21,9 @@ export default {
       async handler(route) {
         try {
           const component = await import(`@/layouts/${route.meta.layout}.vue`);
-          this.layout = component?.default || LayoutDefault;
+          this.layout = shallowRef(component?.default) || shallowRef(LayoutDefault);
         } catch (e) {
-          this.layout = LayoutDefault;
+          this.layout = shallowRef(LayoutDefault);
         }
       },
     },
