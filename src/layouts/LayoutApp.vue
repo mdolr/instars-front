@@ -19,3 +19,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@media (max-width: 959px) {
+  .v-main {
+    padding-top: 0px !important;
+  }
+}
+</style>
