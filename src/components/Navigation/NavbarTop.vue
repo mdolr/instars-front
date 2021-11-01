@@ -2,16 +2,16 @@
   <v-app-bar app fixed color="purple">
     <v-container class="py-0 fill-height d-flex align-center">
       <div>
-        <v-btn class="navbar-button" icon>
+        <v-btn icon>
           <v-icon color="white"> mdi-home </v-icon>
         </v-btn>
-        <v-btn class="navbar-button" icon>
+        <v-btn icon>
           <v-icon color="white"> mdi-magnify </v-icon>
         </v-btn>
-        <v-btn class="navbar-button" icon>
+        <v-btn icon>
           <v-icon color="white"> mdi-clock </v-icon>
         </v-btn>
-        <v-btn class="navbar-button" icon>
+        <v-btn icon>
           <v-icon color="white"> mdi-account </v-icon>
         </v-btn>
       </div>
@@ -23,12 +23,12 @@
   ></v-app-bar>
 </template>
 
-<style>
-.navbar-button {
+<style scoped>
+.v-app-bar__content .v-btn {
   background-color: transparent !important;
 }
 
-.navbar-button::before {
+.v-app-bar__content .v-btn::before {
   border: none !important;
   box-shadow: none !important;
 }
