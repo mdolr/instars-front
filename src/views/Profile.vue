@@ -12,10 +12,10 @@
     <p style="margin-top: 10px">Description blablabla <br />zdjioazjdoiaz</p>
 
     <div class="account-stats" style="margin-top: 10px; display: block">
-      <span><v-icon>mdi-account-group</v-icon> 127 000 Followers</span><br />
-      <span><v-icon>mdi-camera</v-icon> 323 Pictures</span><br />
+      <span><v-icon small>mdi-account-group</v-icon> 127 000 Followers</span><br />
+      <span><v-icon x-small>mdi-camera</v-icon> 323 Pictures</span><br />
       <span class="text-purple"
-        ><v-icon color="purple">mdi-calendar-multiple-check</v-icon> <strong>PERFECT!</strong></span
+        ><v-icon x-large color="purple">mdi-calendar-multiple-check</v-icon> <strong>PERFECT!</strong></span
       >
     </div>
     <br />

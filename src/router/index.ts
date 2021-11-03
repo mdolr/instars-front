@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
+import Search from '../views/Search.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,10 +20,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
-    path: '/profile',
+    path: '/:profile_handle',
     name: 'Profile',
     meta: { layout: 'LayoutApp' },
     component: Profile,
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    meta: { layout: 'LayoutApp' },
+    component: Search,
   },
 ];
 
