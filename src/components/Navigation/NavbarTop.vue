@@ -2,7 +2,8 @@
   <v-app-bar app fixed color="purple">
     <v-container class="py-0 fill-height d-flex align-center">
       <div>
-        <v-btn icon @click="logIn">
+        <v-btn icon>
+          <!--@click="logIn"-->
           <v-icon color="white"> mdi-home </v-icon>
         </v-btn>
         <v-btn icon>
