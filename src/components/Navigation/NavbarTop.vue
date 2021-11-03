@@ -37,7 +37,7 @@
 <script lang="ts">
 export default {
   methods: {
-    async logIn(): Promise<any> {
+    /*async logIn(): Promise<any> {
       try {
         const googleUser = await this.$gAuth.signIn();
         if (!googleUser) {
@@ -55,7 +55,7 @@ export default {
         console.error(error);
         return null;
       }
-    },
+    },*/
   },
 };
 </script>
