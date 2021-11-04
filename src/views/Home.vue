@@ -1,20 +1,20 @@
 <template>
-  <div
-    style="
-      height: 300px;
-      margin-top: 10px !important;
-      width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      background-color: gray;
-    "
-  ></div>
+  <v-container align="center" justify="center">
+    <div style="height: 300px; width: 500px">
+      <TimelinePost />
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import TimelinePost from '@/components/Posts/TimelinePost.vue';
 
 export default defineComponent({
   name: 'Home',
+
+  components: {
+    TimelinePost,
+  },
 });
 </script>
