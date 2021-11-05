@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
 import Search from '../views/Search.vue';
+import Settings from '../views/Settings.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,6 +31,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Search',
     meta: { layout: 'LayoutApp' },
     component: Search,
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    meta: { layout: 'LayoutApp' },
+    component: Settings,
   },
 ];
 
