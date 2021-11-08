@@ -1,29 +1,57 @@
 # tinyinsta-front
 
-## Project setup
-```
-yarn install
-```
+An instagram clone written in Vue deployed on App Engine to scale!
 
-### Compiles and hot-reloads for development
-```
+## Setup
+
+### Development environment
+
+Requirements:
+
+- node >= 17.0.1 (won't work below)
+- yarn >= 1.22.17
+
+```bash
+# First clone the project
+git clone https://github.com/mdolr/tinyinsta-front.git
+
+# Go into the directory
+cd tinyinsta-front
+
+# Install dependencies
+yarn install
+
+# Stat the project
 yarn serve
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+The project is available on : [localhost:8080](http://localhost:8080)
 
-### Run your end-to-end tests
+### Google Console
+
+WIP
+
+## Code-styling
+
+Use :
+
+- prettier [see](https://prettier.io/)
+- eslint [see](https://eslint.org/)
+
+## Testing
+
+Run tests with
+
 ```
 yarn test:e2e
 ```
 
-### Lints and fixes files
+## Build
+
 ```
-yarn lint
+yarn build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Deploy
+
+WIP
