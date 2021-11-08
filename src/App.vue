@@ -14,6 +14,14 @@ export default defineComponent({
   components: { Layout },
   name: 'App',
 
+  setup() {
+    let GoogleOAuth = document.createElement('script');
+    GoogleOAuth.setAttribute('src', 'https://accounts.google.com/gsi/client');
+    GoogleOAuth.defer = true;
+    GoogleOAuth.async = true;
+    document.head.appendChild(GoogleOAuth);
+  },
+
   data() {
     return {
       //
