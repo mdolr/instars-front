@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "axios": "^0.24.0",
     "babel-loader": "^8.2.3",
     "core-js": "^3.6.5",
     "remove": "^0.1.5",
@@ -18,7 +19,7 @@
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
     "vue3-google-auth": "^0.0.2",
-    "vuetify": "^3.0.0-alpha.0",
+    "vuetify": "^3.0.0-alpha.11",
     "vuex": "^4.0.0-0",
     "webfontloader": "^1.0.0"
   },
