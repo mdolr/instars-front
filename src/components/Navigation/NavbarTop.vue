@@ -16,9 +16,10 @@
           <v-icon color="white"> mdi-account </v-icon>
         </v-btn>
       </div>
-      <div class="mr-2 d-flex flex-column ml-auto text-right" id="firebaseui-auth-container">
-        <!--<span style="color: white">Maxime</span
-        ><span style="color: lightgrey; font-size: 12px; margin-top: -6px">@m_dolr</span>-->
+      <div v-if="!isLoggedIn()" class="mr-2 d-flex flex-column ml-auto text-right" id="login-top"></div>
+      <div v-else class="mr-2 d-flex flex-column ml-auto text-right">
+        <span style="color: white">Maxime</span
+        ><span style="color: lightgrey; font-size: 12px; margin-top: -6px">@m_dolr</span>
       </div>
       <!--<v-avatar class="mr-1 0" color="grey darken-1" size="32"></v-avatar>-->
     </v-container>
@@ -37,7 +38,39 @@
 </style>
 
 <script lang="ts">
-export default {
-  methods: {},
-};
+import { defineComponent } from 'vue';
+import { mapActions, mapGetters } from 'vuex';
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
+window.google = window.google || {};
+
+export default defineComponent({
+  mounted() {
+    if (window && window.google && window.google.accounts) {
+      window.google.accounts.id.initialize({
+        client_id: '284772421623-8klntslq83finkqcgee2d3bi08rj7kt0.apps.googleusercontent.com',
+        ux_mode: 'popup',
+        callback: this.login,
+        scope: 'profile email',
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('login-top'),
+        { theme: 'outline', size: 'large' }, // customization attributes
+      );
+
+      // window.google.accounts.id.prompt();
+    }
+  },
+
+  methods: {
+    ...mapActions(['login']),
+    ...mapGetters(['isLoggedIn']),
+  },
+});
 </script>
