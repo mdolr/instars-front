@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
 import Search from '../views/Search.vue';
 import Settings from '../views/Settings.vue';
+import Upload from '../views/Upload.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -37,6 +38,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Settings',
     meta: { layout: 'LayoutApp' },
     component: Settings,
+  },
+  {
+    path: '/upload',
+    name: 'Upload',
+    meta: { layout: 'LayoutApp' },
+    component: Upload,
   },
 ];
 
