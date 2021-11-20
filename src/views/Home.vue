@@ -89,8 +89,6 @@ export default defineComponent({
             description: this.description,
           });
 
-          console.log(post);
-
           if ((post as any)?.data?.uploadURL) {
             await fetch((post as any)?.data?.uploadURL, {
               method: 'PUT',
@@ -101,7 +99,6 @@ export default defineComponent({
             });
 
             await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
-            console.log('SUCCESSS!!!');
           }
         } catch (e) {
           console.error(e);

@@ -49,7 +49,9 @@ export default {
   methods: {
     async likePost() {
       const res = await axios.post(`/posts/${(this as any).data.id}/likes`);
-      console.log(res);
+
+      (this as any).data.hasLiked = res.data.hasLiked;
+      (this as any).data.likes = res.data.likes;
       return true;
     },
   },
