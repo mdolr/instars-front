@@ -8,7 +8,7 @@
         </v-btn>
         <v-btn style="color: white">
           <!--@click="logIn"-->
-          <Satellite />&nbsp;Explore
+          <Observatory />&nbsp;Explore
         </v-btn>
 
         <!--<v-btn icon>
@@ -43,7 +43,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import Satellite from '../CustomIcon/Satellite.vue';
+import Observatory from '../CustomIcon/Observatory.vue';
 import Saturn from '../CustomIcon/Saturn.vue';
 
 declare global {
@@ -55,7 +55,7 @@ declare global {
 window.google = window.google || {};
 
 export default defineComponent({
-  components: { Saturn, Satellite },
+  components: { Saturn, Observatory },
 
   mounted() {
     if (window && window.google && window.google.accounts) {

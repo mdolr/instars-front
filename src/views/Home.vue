@@ -1,29 +1,26 @@
 <template>
   <v-container align="center" justify="center">
-    <div style="height: 300px; width: 500px">
-      <!--<TimelinePost />-->
+    <div class="timeline-container">
+      <div class="new-post-container">
+        <textarea class="message-input" placeholder="Send your thoughts to space!"></textarea>
+        <div class="buttons">
+          <v-btn style="color: white">
+            <!--@click="logIn"-->
+            <v-icon>mdi-paperclip</v-icon>&nbsp;Attachment
+          </v-btn>
+
+          <v-btn style="color: white; background-color: black">
+            <!--@click="logIn"-->
+            <Satellite />&nbsp;Broadcast
+          </v-btn>
+        </div>
+      </div>
     </div>
-    <!--<div
-      id="g_id_onload"
-      data-client_id="686379466324-7o0c06ugjblu86r0f8f7fdd7dpesji5h.apps.googleusercontent.com"
-      data-login_uri="https://localhost:3000/auth/google/callback"
-      data-auto_prompt="true"
-    ></div>-->
-    <div id="buttonDiv"></div>
-    <!--<div
-      
-      class="g_id_signin"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left"
-    ></div>-->
   </v-container>
 </template>
 
 <script lang="ts">
+import Satellite from '@/components/CustomIcon/Satellite.vue';
 import { defineComponent } from 'vue';
 
 //import TimelinePost from '@/components/Posts/TimelinePost.vue';
@@ -32,9 +29,56 @@ export default defineComponent({
   name: 'Home',
 
   components: {
+    Satellite,
     //TimelinePost,
   },
 
   methods: {},
 });
 </script>
+
+<style scoped>
+.timeline-container {
+  height: 100vh;
+  text-align: left;
+  padding: 0px 14px 0px 14px;
+}
+
+.new-post-container {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  background-color: rgb(23, 25, 35);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-post-container .message-input {
+  width: 100%;
+  height: 130px;
+  resize: none;
+  color: white;
+
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.new-post-container .buttons {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-post-container .buttons .v-btn {
+  color: white;
+  background-color: black;
+}
+</style>

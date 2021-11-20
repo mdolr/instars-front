@@ -1,7 +1,7 @@
 <template>
   <v-bottom-navigation grow bg-color="black">
     <v-btn> <Saturn /><span>Home</span> </v-btn>
-    <v-btn> <Satellite /><span>Explore</span> </v-btn>
+    <v-btn> <Observatory /><span>Explore</span> </v-btn>
     <v-btn v-if="!isLoggedIn()"><div id="login-bottom"></div></v-btn>
     <v-btn v-else> <v-icon>mdi-account</v-icon> <span>Profile</span> </v-btn>
   </v-bottom-navigation>
@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import Satellite from '../CustomIcon/Satellite.vue';
+import Observatory from '../CustomIcon/Observatory.vue';
 import Saturn from '../CustomIcon/Saturn.vue';
 
 declare global {
@@ -37,7 +37,8 @@ declare global {
 window.google = window.google || {};
 
 export default defineComponent({
-  components: { Satellite, Saturn },
+  components: { Observatory, Saturn },
+
   mounted() {
     if (window && window.google && window.google.accounts) {
       window.google.accounts.id.initialize({
