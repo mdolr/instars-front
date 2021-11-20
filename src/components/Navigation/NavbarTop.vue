@@ -2,19 +2,18 @@
   <v-app-bar app fixed color="black">
     <v-container class="py-0 fill-height d-flex align-center">
       <div>
-        <v-btn icon>
+        <v-btn style="color: white">
           <!--@click="logIn"-->
-          <v-icon color="white"> mdi-home </v-icon>
+          <Saturn />&nbsp;Home
         </v-btn>
-        <v-btn icon>
-          <v-icon color="white"> mdi-magnify </v-icon>
+        <v-btn style="color: white">
+          <!--@click="logIn"-->
+          <Satellite />&nbsp;Explore
         </v-btn>
-        <v-btn icon>
-          <v-icon color="white"> mdi-clock </v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon color="white"> mdi-account </v-icon>
-        </v-btn>
+
+        <!--<v-btn icon>
+          <v-icon color="white"> mdi-star </v-icon>
+        </v-btn>-->
       </div>
       <div v-if="!isLoggedIn()" class="mr-2 d-flex flex-column ml-auto text-right" id="login-top"></div>
       <div v-else style="display: flex; margin-left: auto; align-items: center">
@@ -44,6 +43,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
+import Satellite from '../CustomIcon/Satellite.vue';
+import Saturn from '../CustomIcon/Saturn.vue';
 
 declare global {
   interface Window {
@@ -54,6 +55,8 @@ declare global {
 window.google = window.google || {};
 
 export default defineComponent({
+  components: { Saturn, Satellite },
+
   mounted() {
     if (window && window.google && window.google.accounts) {
       window.google.accounts.id.initialize({
