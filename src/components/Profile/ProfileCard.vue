@@ -9,7 +9,7 @@
         </div>
         <div style="margin-left: auto; align-items: center; display: flex">
           <span style="font-weight: 700">
-            {{ data.followers }}&nbsp;<v-btn icon
+            {{ data.followers }}&nbsp;<v-btn icon @click="followUser"
               ><v-icon
                 style="font-size: 1.3rem; display: flex; align-items: center"
                 :color="data.hasFollowed ? 'blue' : 'lightgrey'"
@@ -41,11 +41,25 @@
 </style>
 
 <script lang="ts">
+import axios from '@/plugins/axios';
+
 export default {
   props: {
     data: {
       type: Object,
       required: true,
+    },
+  },
+
+  methods: {
+    async followUser() {
+      const res = await axios.post(`/follow/${(this as any).data.id}`);
+
+      console.log((this as any).data.followers, res.data.followers);
+
+      (this as any).data.hasFollowed = res.data.hasFollowed;
+      (this as any).data.followers = res.data.followers;
+      return true;
     },
   },
 };
