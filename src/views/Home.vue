@@ -2,15 +2,15 @@
   <v-container align="center" justify="center">
     <div class="timeline-container">
       <div class="new-post-container">
-        <textarea class="message-input" placeholder="Send your thoughts to space!"></textarea>
+        <textarea v-model="description" class="message-input" placeholder="Send your thoughts to space!"></textarea>
         <div class="buttons">
-          <input type="file" id="fileInput" />
+          <input type="file" id="fileInput" @change="updateFile" />
           <v-btn tag="label" for="fileInput" style="color: white">
             <!--@click="logIn"-->
-            <v-icon>mdi-paperclip</v-icon>&nbsp;Attachment
+            <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
           </v-btn>
 
-          <v-btn style="color: white; background-color: black">
+          <v-btn @click="createPost" style="color: white; background-color: black">
             <!--@click="logIn"-->
             <Satellite />&nbsp;Broadcast
           </v-btn>
@@ -23,6 +23,7 @@
 <script lang="ts">
 import Satellite from '@/components/CustomIcon/Satellite.vue';
 import { defineComponent } from 'vue';
+import axios from '@/plugins/axios';
 
 //import TimelinePost from '@/components/Posts/TimelinePost.vue';
 
@@ -34,7 +35,64 @@ export default defineComponent({
     //TimelinePost,
   },
 
-  methods: {},
+  data() {
+    return {
+      file: null,
+      description: '',
+    };
+  },
+
+  computed: {},
+
+  methods: {
+    updateFile(e: any) {
+      if (e?.target?.files?.[0]) {
+        this.file = e.target.files[0];
+      } else {
+        this.file = null;
+      }
+    },
+
+    async createPost() {
+      if (this.file && this?.description.length > 0) {
+        try {
+          const post = await axios.post('/posts', {
+            fileName: (this as any).file.name,
+            fileType: (this as any).file.type,
+            description: this.description,
+          });
+
+          console.log(post);
+
+          if ((post as any)?.data?.uploadURL) {
+            await fetch((post as any)?.data?.uploadURL, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'image/png',
+              },
+              body: this.file,
+            });
+
+            console.log('SUCCESSSS!!!!!');
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      /*const url = (await axios.get(`/signedURL?fileName=${'KEKW'}.png`)).data;
+
+      const fileInput = document.getElementById('fileInput');
+      const file = (fileInput as any).files[0];
+
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'image/png',
+        },
+        body: file,
+      });*/
+    },
+  },
 });
 </script>
 
