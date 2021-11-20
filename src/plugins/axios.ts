@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080/_ah/api/tinyinsta/v1',
+  baseURL: process.env.BASE_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
