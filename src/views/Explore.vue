@@ -1,35 +1,18 @@
 <template>
   <v-container align="center" justify="center">
     <div class="timeline-container">
-      <div class="new-post-container">
-        <textarea v-model="description" class="message-input" placeholder="Send your thoughts to space!"></textarea>
-
-        <div class="buttons">
-          <input type="file" id="fileInput" @change="updateFile" />
-          <v-btn tag="label" for="fileInput" style="color: white">
-            <!--@click="logIn"-->
-            <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
-          </v-btn>
-
-          <v-btn @click="createPost" style="color: white; background-color: black">
-            <!--@click="logIn"-->
-            <Satellite />&nbsp;Broadcast
-          </v-btn>
-        </div>
-      </div>
       <div class="posts-container">
-        <TimelinePost v-for="post in posts" :key="post.id" :data="post" />
+        <ProfileCard v-for="profile in profiles" :key="profile.id" :data="profile" />
       </div>
     </div>
   </v-container>
 </template>
 
 <script lang="ts">
-import Satellite from '@/components/CustomIcon/Satellite.vue';
 import { defineComponent } from 'vue';
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
-import TimelinePost from '@/components/Posts/TimelinePost.vue';
+import ProfileCard from '@/components/Profile/ProfileCard.vue';
 
 //import TimelinePost from '@/components/Posts/TimelinePost.vue';
 
@@ -37,8 +20,8 @@ export default defineComponent({
   name: 'Home',
 
   components: {
-    Satellite,
-    TimelinePost,
+    // Satellite,
+    ProfileCard,
   },
 
   data() {
@@ -47,13 +30,13 @@ export default defineComponent({
       description: '',
       topTimestamp: new Date().getTime(),
       botTimestamp: new Date().getTime(),
-      posts: [],
+      profiles: [],
     };
   },
 
   async mounted() {
     if ((this as any).isLoggedIn()) {
-      (this as any).posts = await this.getPosts();
+      (this as any).profiles = await this.getProfiles();
     } else {
       (this as any).$router.push('/');
     }
@@ -64,48 +47,11 @@ export default defineComponent({
   methods: {
     ...mapGetters(['isLoggedIn', 'getUser']),
 
-    updateFile(e: any) {
-      if (e?.target?.files?.[0]) {
-        this.file = e.target.files[0];
-      } else {
-        this.file = null;
-      }
-    },
-
-    async getPosts() {
-      const res = await axios.get('/timeline');
+    async getProfiles() {
+      const res = await axios.get('/users/explore');
 
       if ((res as any)?.data?.items) {
         return (res as any)?.data?.items;
-      }
-    },
-
-    async createPost() {
-      if (this.file && this?.description.length > 0) {
-        try {
-          const post = await axios.post('/posts', {
-            fileName: (this as any).file.name,
-            fileType: (this as any).file.type,
-            description: this.description,
-          });
-
-          console.log(post);
-
-          if ((post as any)?.data?.uploadURL) {
-            await fetch((post as any)?.data?.uploadURL, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'image/png',
-              },
-              body: this.file,
-            });
-
-            await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
-            console.log('SUCCESSS!!!');
-          }
-        } catch (e) {
-          console.error(e);
-        }
       }
     },
   },

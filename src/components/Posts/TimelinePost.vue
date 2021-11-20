@@ -13,18 +13,20 @@
           </p>
         </div>
         <div style="display: flex; flex-direction: row; align-items: center; width: 100%" class="mt-4">
-          <div>
-            <v-avatar class="" color="grey darken-1" size="36"></v-avatar>
-          </div>
+          <img :src="data.author.pictureURL" height="36" width="36" style="border-radius: 50%" />
           <div style="display: flex; flex-direction: column">
             <h4 class="ml-2" style="margin-bottom: -6px">{{ data.author.name }}</h4>
             <span class="ml-2" style="color: grey; font-size: 12px">@{{ data.author.handle }}</span>
           </div>
-          <div style="margin-left: auto">
-            <v-btn icon
-              ><v-icon style="font-size: 19px; transform: scale(1.3)" :color="data.hasLiked ? 'orange' : 'white'"
-                >mdi-star</v-icon
-              ></v-btn
+          <div style="margin-left: auto; align-items: center; display: flex">
+            <span style="font-weight: 700">
+              {{ data.likes }}&nbsp;<v-btn icon @click="likePost"
+                ><v-icon
+                  style="font-size: 1.3rem; display: flex; align-items: center"
+                  :color="data.hasLiked ? 'orange' : 'lightgrey'"
+                  >mdi-star</v-icon
+                ></v-btn
+              ></span
             >
           </div>
         </div>
@@ -34,11 +36,21 @@
 </template>
 
 <script lang="ts">
+import axios from '@/plugins/axios';
+
 export default {
   props: {
     data: {
       type: Object,
       required: true,
+    },
+  },
+
+  methods: {
+    async likePost() {
+      const res = await axios.post(`/posts/${(this as any).data.id}/likes`);
+      console.log(res);
+      return true;
     },
   },
 };

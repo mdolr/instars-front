@@ -6,7 +6,7 @@
           <!--@click="logIn"-->
           <Saturn />&nbsp;Home
         </v-btn>
-        <v-btn style="color: white">
+        <v-btn tag="router-link" to="/explore" style="color: white">
           <!--@click="logIn"-->
           <Observatory />&nbsp;Explore
         </v-btn>
