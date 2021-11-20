@@ -4,7 +4,8 @@
       <div class="new-post-container">
         <textarea class="message-input" placeholder="Send your thoughts to space!"></textarea>
         <div class="buttons">
-          <v-btn style="color: white">
+          <input type="file" id="fileInput" />
+          <v-btn tag="label" for="fileInput" style="color: white">
             <!--@click="logIn"-->
             <v-icon>mdi-paperclip</v-icon>&nbsp;Attachment
           </v-btn>
@@ -38,6 +39,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+input[type='file'] {
+  display: none;
+}
+
 .timeline-container {
   height: 100vh;
   text-align: left;

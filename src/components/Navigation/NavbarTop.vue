@@ -15,7 +15,12 @@
           <v-icon color="white"> mdi-star </v-icon>
         </v-btn>-->
       </div>
-      <div v-if="!isLoggedIn()" class="mr-2 d-flex flex-column ml-auto text-right" id="login-top"></div>
+      <div
+        v-if="!isLoggedIn()"
+        class="mr-2 d-flex flex-column ml-auto text-right"
+        style="padding-right: 6px"
+        id="login-top"
+      ></div>
       <div v-else style="display: flex; margin-left: auto; align-items: center">
         <div class="mr-2 d-flex flex-column ml-auto text-right">
           <span style="color: white">{{ getUser().name }}</span
