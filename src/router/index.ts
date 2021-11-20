@@ -4,10 +4,17 @@ import Profile from '../views/Profile.vue';
 import Search from '../views/Search.vue';
 import Settings from '../views/Settings.vue';
 import Upload from '../views/Upload.vue';
+import Landing from '../views/Landing.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    name: 'Landing',
+    component: Landing,
+    meta: { layout: 'LayoutApp' },
+  },
+  {
+    path: '/home',
     name: 'Home',
     meta: { layout: 'LayoutApp' },
     component: Home,

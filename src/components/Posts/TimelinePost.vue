@@ -1,61 +1,48 @@
 <template>
-  <v-card elevation="2" width="300px" style="border-radius: 6px">
+  <v-card elevation="2" class="mt-10" style="border-radius: 12px; background-color: rgb(23, 25, 35); color: white">
     <div style="display: flex; flex-direction: column; align-items: center">
-      <v-img
-        lazy-src="https://pbs.twimg.com/media/FC_xR-taUAIXLk3.jpg:large"
-        max-height="300px"
-        max-width="300px"
-        src="https://pbs.twimg.com/media/FC_xR-taUAIXLk3.jpg:large"
-        style="height: 300px; width: 300px; background-color: black"
-      ></v-img>
-
+      <div style="background-color: black; width: 100%; display: flex; justify-content: center">
+        <img :src="data.mediaURL" style="background-color: black; min-width: 100%" />
+      </div>
       <v-divider style="width: 100%" />
 
-      <div style="padding: 12px 12px 12px 12px; display: flex; align-items: start; flex-direction: column; width: 100%">
-        <div style="display: flex; flex-direction: row; align-items: center">
+      <div style="padding: 12px 24px 24px 24px; display: flex; align-items: start; flex-direction: column; width: 100%">
+        <div>
+          <p style="text-align: left">
+            {{ data.description }}
+          </p>
+        </div>
+        <div style="display: flex; flex-direction: row; align-items: center; width: 100%" class="mt-4">
           <div>
             <v-avatar class="" color="grey darken-1" size="36"></v-avatar>
           </div>
-          <h3 class="ml-2">Maxime</h3>
-          <span class="ml-2">@mdolr</span>
-        </div>
-
-        <div
-          style="
-            display: flex;
-            margin-top: 6px;
-            align-items: start;
-            flex-direction: column;
-            width: 100%;
-            margin-bottom: 6px;
-          "
-        >
-          <div>
-            <v-icon style="font-size: 19px">mdi-calendar-month-outline</v-icon>
-            <span style="font-size: 14px">January 1st 2021</span>
+          <div style="display: flex; flex-direction: column">
+            <h4 class="ml-2" style="margin-bottom: -6px">{{ data.author.name }}</h4>
+            <span class="ml-2" style="color: grey; font-size: 12px">@{{ data.author.handle }}</span>
           </div>
-          <div>
-            <v-icon style="font-size: 19px">mdi-map-marker</v-icon> <span style="font-size: 14px">Paris, France</span>
+          <div style="margin-left: auto">
+            <v-btn icon
+              ><v-icon style="font-size: 19px; transform: scale(1.3)" :color="data.hasLiked ? 'orange' : 'white'"
+                >mdi-star</v-icon
+              ></v-btn
+            >
           </div>
-        </div>
-        <div>
-          <p style="text-align: left">
-            Je me suis beaucoup amusé sur cette photo la description en fait même plusieurs lignes c'est incroyable
-            !!!!!!!!
-          </p>
-        </div>
-        <div
-          style="margin-top: 6px; display: flex; justify-content: space-between; width: 100%"
-          class="post-interactions-buttons"
-        >
-          <v-btn icon><v-icon style="font-size: 19px">mdi-heart</v-icon></v-btn>
-          <v-btn icon><v-icon style="font-size: 19px">mdi-share</v-icon></v-btn>
-          <v-btn icon><v-icon style="font-size: 19px">mdi-dots-horizontal</v-icon></v-btn>
         </div>
       </div>
     </div>
   </v-card>
 </template>
+
+<script lang="ts">
+export default {
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
 
 <style scoped>
 .v-btn--variant-contained::before,

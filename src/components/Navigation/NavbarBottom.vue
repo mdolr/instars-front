@@ -1,6 +1,6 @@
 <template>
   <v-bottom-navigation grow bg-color="black">
-    <v-btn> <Saturn /><span>Home</span> </v-btn>
+    <v-btn tag="router-link" to="/home"> <Saturn /><span>Home</span> </v-btn>
     <v-btn> <Observatory /><span>Explore</span> </v-btn>
     <v-btn v-if="!isLoggedIn()"><div id="login-bottom"></div></v-btn>
     <v-btn v-else> <v-icon>mdi-account</v-icon> <span>Profile</span> </v-btn>
