@@ -45,18 +45,23 @@ export default defineComponent({
     return {
       file: null,
       description: '',
-      topTimestamp: new Date().getTime(),
-      botTimestamp: new Date().getTime(),
+      before: '',
+      after: '',
       posts: [],
     };
   },
 
   async mounted() {
     if ((this as any).isLoggedIn()) {
-      (this as any).posts = await this.getPosts();
+      const data = await this.getPosts('');
+      (this as any).posts = data.items;
+      (this as any).before = data.previous;
+      (this as any).after = data.next;
     } else {
       (this as any).$router.push('/');
     }
+
+    this.scrollDetector();
   },
 
   computed: {},
@@ -72,11 +77,40 @@ export default defineComponent({
       }
     },
 
-    async getPosts() {
-      const res = await axios.get('/timeline');
+    scrollDetector() {
+      let fetching = false;
+      window.onscroll = async () => {
+        let bottomOfWindow =
+          Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) +
+            window.innerHeight ===
+          document.documentElement.offsetHeight;
+
+        if (bottomOfWindow && !fetching) {
+          fetching = true;
+          try {
+            const data = await this.getPosts((this as any)?.after);
+
+            if (data.items) {
+              // merge (this as any).posts with data.items
+              (this as any).posts = [...(this as any).posts, ...data.items];
+              (this as any).before = data.previous;
+              (this as any).after = data.next;
+            }
+
+            fetching = false;
+          } catch (e) {
+            fetching = false;
+            console.error(e);
+          }
+        }
+      };
+    },
+
+    async getPosts(after: string) {
+      const res = await axios.get(`/timeline${after ? '?after=' + after : ''}`);
 
       if ((res as any)?.data?.items) {
-        return (res as any)?.data?.items;
+        return (res as any)?.data;
       }
     },
 
