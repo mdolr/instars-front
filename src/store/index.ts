@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import router from '@/router/index';
 import axios from '@/plugins/axios';
 
 export default createStore({
@@ -36,6 +37,8 @@ export default createStore({
         const user = await axios.get('/users/me');
 
         commit('setUser', user.data);
+
+        router.push('/home');
       }
     },
   },
