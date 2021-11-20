@@ -17,8 +17,19 @@
           </v-btn>
         </div>
       </div>
-      <div class="posts-container">
+      <div class="posts-container" v-if="posts.length > 0">
         <TimelinePost v-for="post in posts" :key="post.id" :data="post" />
+      </div>
+      <div class="posts-container" style="text-align: center" v-else>
+        <br />
+        <h4 style="color: grey; font-weight: 400">
+          It looks like your timeline is emptier than space :(<br />
+          You should <strong>explore</strong> some more to find new posts!
+        </h4>
+        <v-btn tag="router-link" to="/explore" class="mt-2" style="color: white; background-color: rgb(23, 25, 35)">
+          <!--@click="logIn"-->
+          <Observatory />&nbsp;Explore
+        </v-btn>
       </div>
     </div>
   </v-container>
@@ -29,6 +40,7 @@ import Satellite from '@/components/CustomIcon/Satellite.vue';
 import { defineComponent } from 'vue';
 import axios from '@/plugins/axios';
 import { mapGetters } from 'vuex';
+import Observatory from '@/components/CustomIcon/Observatory.vue';
 import TimelinePost from '@/components/Posts/TimelinePost.vue';
 
 //import TimelinePost from '@/components/Posts/TimelinePost.vue';
@@ -39,6 +51,7 @@ export default defineComponent({
   components: {
     Satellite,
     TimelinePost,
+    Observatory,
   },
 
   data() {
