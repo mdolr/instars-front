@@ -39,6 +39,8 @@ export default defineComponent({
     return {
       file: null,
       description: '',
+      topTimestamp: new Date().getTime(),
+      botTimestamp: new Date().getTime(),
     };
   },
 
@@ -73,24 +75,13 @@ export default defineComponent({
               body: this.file,
             });
 
-            console.log('SUCCESSSS!!!!!');
+            await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
+            console.log('SUCCESSS!!!');
           }
         } catch (e) {
           console.error(e);
         }
       }
-      /*const url = (await axios.get(`/signedURL?fileName=${'KEKW'}.png`)).data;
-
-      const fileInput = document.getElementById('fileInput');
-      const file = (fileInput as any).files[0];
-
-      const res = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'image/png',
-        },
-        body: file,
-      });*/
     },
   },
 });
