@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app fixed color="purple">
+  <v-app-bar app fixed color="black">
     <v-container class="py-0 fill-height d-flex align-center">
       <div>
         <v-btn icon>
@@ -17,11 +17,15 @@
         </v-btn>
       </div>
       <div v-if="!isLoggedIn()" class="mr-2 d-flex flex-column ml-auto text-right" id="login-top"></div>
-      <div v-else class="mr-2 d-flex flex-column ml-auto text-right">
-        <span style="color: white">Maxime</span
-        ><span style="color: lightgrey; font-size: 12px; margin-top: -6px">@m_dolr</span>
+      <div v-else style="display: flex; margin-left: auto; align-items: center">
+        <div class="mr-2 d-flex flex-column ml-auto text-right">
+          <span style="color: white">{{ getUser().name }}</span
+          ><span style="color: lightgrey; font-size: 12px; margin-top: -6px">@{{ getUser().handle }}</span>
+        </div>
+        <v-avatar class="mr-1 0" color="grey darken-1" size="32">
+          <img :src="getUser().pictureURL" alt="Profile picture"
+        /></v-avatar>
       </div>
-      <!--<v-avatar class="mr-1 0" color="grey darken-1" size="32"></v-avatar>-->
     </v-container>
   </v-app-bar>
 </template>
@@ -70,7 +74,7 @@ export default defineComponent({
 
   methods: {
     ...mapActions(['login']),
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters(['isLoggedIn', 'getUser']),
   },
 });
 </script>

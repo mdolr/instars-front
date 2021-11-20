@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: black">
     <NavbarTop class="d-none d-md-flex" />
     <v-main>
       <slot />
@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style scoped>
+.v-main {
+  min-height: 100vh;
+}
+
 @media (max-width: 959px) {
   .v-main {
     padding-top: 0px !important;

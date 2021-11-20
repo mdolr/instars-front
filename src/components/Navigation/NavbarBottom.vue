@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation grow bg-color="purple">
+  <v-bottom-navigation grow bg-color="black">
     <v-btn> <v-icon>mdi-home</v-icon><span>Home</span> </v-btn>
     <v-btn> <v-icon>mdi-clock</v-icon><span>Timelapse</span> </v-btn>
     <v-btn> <v-icon>mdi-magnify</v-icon> <span>Search</span> </v-btn>

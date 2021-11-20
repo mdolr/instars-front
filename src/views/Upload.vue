@@ -15,7 +15,7 @@ export default defineComponent({
   methods: {
     async upload() {
       console.log('Uploading....');
-      const url = (await axios.get(`/signedURL?fileName=${'Kappa'}.png`)).data;
+      const url = (await axios.get(`/signedURL?fileName=${'KEKW'}.png`)).data;
 
       const fileInput = document.getElementById('fileInput');
       const file = (fileInput as any).files[0];

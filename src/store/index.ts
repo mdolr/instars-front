@@ -43,6 +43,9 @@ export default createStore({
     isLoggedIn(state) {
       return state.user !== null;
     },
+    getUser(state) {
+      return (state as any).user;
+    },
   },
   modules: {},
 });
