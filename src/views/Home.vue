@@ -108,6 +108,12 @@ export default defineComponent({
 
             if (data?.items?.length) {
               // merge (this as any).posts with data.items
+              const existingPostsIds = (this as any).posts.map((post: any) => post.id);
+
+              data.items = data.items.filter((newPost: any) => {
+                return !existingPostsIds.includes(newPost.id);
+              });
+
               (this as any).posts = [...(this as any).posts, ...data.items];
               (this as any).before = data.previous;
               (this as any).after = data.next;
@@ -130,6 +136,16 @@ export default defineComponent({
       }
     },
 
+    async bulkCreatePost(count: number) {
+      this.description = `Post`;
+      if (this.file && this?.description.length > 0) {
+        for await (var i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+          this.description = `Post ${i}`;
+          await this.createPost();
+        }
+      }
+    },
+
     async createPost() {
       if (this.file && this?.description.length > 0) {
         try {
@@ -148,11 +164,16 @@ export default defineComponent({
               body: this.file,
             });
 
-            await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
+            const publishedPost = await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
+
+            return publishedPost;
           }
         } catch (e) {
           console.error(e);
+          return e;
         }
+      } else {
+        return null;
       }
     },
   },

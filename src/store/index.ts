@@ -25,23 +25,30 @@ export default createStore({
     async login({ commit, state }, credentials) {
       // Firstly check if we have access to the Google JWT Token
       if (credentials?.credential) {
-        // Commit the credentials to the store
-        commit('setCredentials', credentials);
-
         // Set the global axios Authorization header to our bearer JWT token
         axios.defaults.headers.common = {
           Authorization: `Bearer ${credentials.credential}`,
         };
 
-        // Save the token to keep the session going through refreshes
-        localStorage.setItem('token', JSON.stringify(credentials.credential));
+        try {
+          // Then retrieve user data from our API
+          const user = await axios.get('/users/me');
 
-        // Then retrieve user data from our API
-        const user = await axios.get('/users/me');
+          // Commit the credentials and user data to the store
+          commit('setCredentials', credentials);
+          commit('setUser', user.data);
 
-        commit('setUser', user.data);
+          router.push('/home');
 
-        router.push('/home');
+          // Save the token to keep the session going through refreshes
+          localStorage.setItem('token', JSON.stringify(credentials.credential));
+        } catch (error) {
+          axios.defaults.headers.common = {
+            Authorization: '',
+          };
+
+          console.error(error);
+        }
       }
     },
   },
