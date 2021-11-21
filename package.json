@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --mode production",
+    "serve": "cross-env NODE_ENV=development vue-cli-service serve --mode development",
+    "build": "cross-env NODE_ENV=production vue-cli-service build --mode production",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
@@ -41,6 +41,7 @@
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/vue2-jest": "^27.0.0-alpha.3",
     "chromedriver": "95",
+    "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
