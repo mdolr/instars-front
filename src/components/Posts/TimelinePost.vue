@@ -18,6 +18,11 @@
             <h4 class="ml-2" style="margin-bottom: -6px">{{ data.author.name }}</h4>
             <span class="ml-2" style="color: grey; font-size: 12px">@{{ data.author.handle }}</span>
           </div>
+          <div style="margin-left: auto; margin-right: auto">
+            <span color="grey" style="color: #808080; font-size: 12px"
+              ><i>{{ formattedDate }}</i></span
+            >
+          </div>
           <div style="margin-left: auto; align-items: center; display: flex">
             <span style="font-weight: 700">
               {{ data.likes }}&nbsp;<v-btn icon @click="likePost"
@@ -36,6 +41,7 @@
 </template>
 
 <script lang="ts">
+import moment from 'moment';
 import axios from '@/plugins/axios';
 
 export default {
@@ -43,6 +49,12 @@ export default {
     data: {
       type: Object,
       required: true,
+    },
+  },
+
+  computed: {
+    formattedDate() {
+      return moment((this as any).data.createdAt).format('DD/MM/YYYY hh:mm:ss');
     },
   },
 

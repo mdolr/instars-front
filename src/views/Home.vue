@@ -11,7 +11,7 @@
             <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
           </v-btn>
 
-          <v-btn @click="createPost" style="color: white; background-color: black">
+          <v-btn @click="bulkCreatePost(15)" style="color: white; background-color: black">
             <!--@click="logIn"-->
             <Satellite />&nbsp;Broadcast
           </v-btn>
@@ -138,8 +138,9 @@ export default defineComponent({
 
     async bulkCreatePost(count: number) {
       this.description = `Post`;
+
       if (this.file && this?.description.length > 0) {
-        for await (var i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+        for (let i = 0; i < count; i++) {
           this.description = `Post ${i}`;
           await this.createPost();
         }
