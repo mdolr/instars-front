@@ -33,6 +33,9 @@ export default createStore({
           Authorization: `Bearer ${credentials.credential}`,
         };
 
+        // Save the token to keep the session going through refreshes
+        localStorage.setItem('token', JSON.stringify(credentials.credential));
+
         // Then retrieve user data from our API
         const user = await axios.get('/users/me');
 

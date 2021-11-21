@@ -9,6 +9,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from './layouts/Layout.vue';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
   components: { Layout },
@@ -22,10 +23,25 @@ export default defineComponent({
     document.head.appendChild(GoogleOAuth);
   },
 
+  mounted() {
+    if (localStorage.getItem('token')) {
+      try {
+        const token = JSON.parse((localStorage as any).getItem('token'));
+        this.login({ credential: token });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  },
+
   data() {
     return {
       //
     };
+  },
+
+  methods: {
+    ...mapActions(['login']),
   },
 });
 </script>

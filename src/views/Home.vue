@@ -67,9 +67,12 @@ export default defineComponent({
   async mounted() {
     if ((this as any).isLoggedIn()) {
       const data = await this.getPosts('');
-      (this as any).posts = data.items;
-      (this as any).before = data.previous;
-      (this as any).after = data.next;
+
+      if (data?.items?.length) {
+        (this as any).posts = data.items;
+        (this as any).before = data.previous;
+        (this as any).after = data.next;
+      }
     } else {
       (this as any).$router.push('/');
     }
@@ -103,7 +106,7 @@ export default defineComponent({
           try {
             const data = await this.getPosts((this as any)?.after);
 
-            if (data.items) {
+            if (data?.items?.length) {
               // merge (this as any).posts with data.items
               (this as any).posts = [...(this as any).posts, ...data.items];
               (this as any).before = data.previous;
