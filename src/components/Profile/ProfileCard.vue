@@ -1,5 +1,9 @@
 <template>
-  <v-card elevation="2" style="background-color: rgb(23, 25, 35); color: white; border-radius: 12px; padding: 12px">
+  <v-card
+    elevation="2"
+    class="mt-10"
+    style="background-color: rgb(23, 25, 35); color: white; border-radius: 12px; padding: 12px"
+  >
     <v-container justify="center" align="center">
       <div style="display: flex; flex-direction: row; align-items: center; width: 100%">
         <img :src="data.pictureURL" height="36" width="36" style="border-radius: 50%" />
