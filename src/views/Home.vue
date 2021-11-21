@@ -11,7 +11,7 @@
             <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
           </v-btn>
 
-          <v-btn @click="bulkCreatePost(15)" style="color: white; background-color: black">
+          <v-btn @click="createPost" style="color: white; background-color: black">
             <!--@click="logIn"-->
             <Satellite />&nbsp;Broadcast
           </v-btn>
