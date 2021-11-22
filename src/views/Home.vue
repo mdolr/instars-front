@@ -167,6 +167,17 @@ export default defineComponent({
 
             const publishedPost = await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
 
+            this.description = '';
+            this.updateFile(null);
+
+            const data = await this.getPosts('');
+
+            if (data?.items?.length) {
+              (this as any).posts = data.items;
+              (this as any).before = data.previous;
+              (this as any).after = data.next;
+            }
+
             return publishedPost;
           }
         } catch (e) {
