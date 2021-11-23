@@ -5,7 +5,7 @@
         <textarea v-model="description" class="message-input" placeholder="Send your thoughts to space!"></textarea>
 
         <div class="buttons">
-          <input type="file" id="fileInput" @change="updateFile" />
+          <input type="file" id="fileInput" ref="inputFile" @change="updateFile" />
           <v-btn tag="label" for="fileInput" style="color: white">
             <!--@click="logIn"-->
             <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
@@ -88,6 +88,7 @@ export default defineComponent({
         this.file = e.target.files[0];
       } else {
         this.file = null;
+        (window as any).document.getElementById('fileInput').value = null;
       }
     },
 
