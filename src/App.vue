@@ -36,7 +36,12 @@ export default defineComponent({
   methods: {
     ...mapActions(['login']),
     initGoogleOAuth() {
-      if (window && window.google && window.google.accounts) {
+      if (
+        window &&
+        window.google &&
+        window.google.accounts &&
+        !((window as any).document.getElementById('login-button').childNodes.length > 0)
+      ) {
         window.google.accounts.id.initialize({
           client_id: '284772421623-8klntslq83finkqcgee2d3bi08rj7kt0.apps.googleusercontent.com',
           ux_mode: 'popup',

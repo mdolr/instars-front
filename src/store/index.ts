@@ -51,6 +51,23 @@ export default createStore({
         }
       }
     },
+
+    async logout({ commit, state }) {
+      // Remove the token from the axios header
+      axios.defaults.headers.common = {
+        Authorization: '',
+      };
+
+      // Remove the token from the store
+      commit('removeCredentials');
+      commit('removeUser');
+
+      // Remove the token from local storage
+      localStorage.removeItem('token');
+
+      // Redirect to the login page
+      router.push('/');
+    },
   },
   getters: {
     isLoggedIn(state) {

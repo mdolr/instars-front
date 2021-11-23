@@ -36,9 +36,40 @@ declare global {
 window.google = window.google || {};
 
 export default defineComponent({
+  mounted() {
+    this.initGoogleOAuth();
+  },
+
   methods: {
     ...mapActions(['login']),
     ...mapGetters(['isLoggedIn', 'getUser']),
+
+    initGoogleOAuth() {
+      if (
+        window &&
+        window.google &&
+        window.google.accounts &&
+        !((window as any).document.getElementById('login-button').childNodes.length > 0)
+      ) {
+        window.google.accounts.id.initialize({
+          client_id: '284772421623-8klntslq83finkqcgee2d3bi08rj7kt0.apps.googleusercontent.com',
+          ux_mode: 'popup',
+          callback: this.login,
+          scope: 'profile email',
+        });
+
+        setTimeout(() => {
+          console.log('Rendering Google Auth button');
+          window.google.accounts.id.renderButton(
+            document.getElementById('login-button'),
+            { theme: 'outline', size: 'large' }, // customization attributes
+          );
+          console.log("Button rendered, refresh your browser if you can't see it");
+        }, 200);
+
+        // window.google.accounts.id.prompt();
+      }
+    },
   },
 });
 </script>

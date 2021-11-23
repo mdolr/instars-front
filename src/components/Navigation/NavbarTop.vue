@@ -24,6 +24,7 @@
         <v-avatar class="mr-1 0" color="grey darken-1" size="32">
           <img :src="getUser().pictureURL" alt="Profile picture"
         /></v-avatar>
+        <v-btn @click="logout" icon="mdi-account-remove" style="color: white"> </v-btn>
       </div>
     </v-container>
   </v-app-bar>
@@ -50,7 +51,7 @@ export default defineComponent({
   components: { Saturn, Observatory },
 
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'logout']),
     ...mapGetters(['isLoggedIn', 'getUser']),
   },
 });
