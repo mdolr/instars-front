@@ -15,15 +15,14 @@ export default defineComponent({
   components: { Layout },
   name: 'App',
 
-  setup() {
-    let GoogleOAuth = document.createElement('script');
-    GoogleOAuth.setAttribute('src', 'https://accounts.google.com/gsi/client');
-    GoogleOAuth.defer = true;
-    GoogleOAuth.async = true;
-    document.head.appendChild(GoogleOAuth);
-  },
-
   mounted() {
+    (this as any).GoogleOAuth = document.createElement('script');
+    (this as any).GoogleOAuth.setAttribute('src', 'https://accounts.google.com/gsi/client');
+    (this as any).GoogleOAuth.defer = true;
+    (this as any).GoogleOAuth.async = true;
+    (this as any).GoogleOAuth.onload = () => (this as any).initGoogleOAuth();
+    document.head.appendChild((this as any).GoogleOAuth);
+
     if (localStorage.getItem('token')) {
       try {
         const token = JSON.parse((localStorage as any).getItem('token'));
@@ -34,14 +33,35 @@ export default defineComponent({
     }
   },
 
-  data() {
-    return {
-      //
-    };
-  },
-
   methods: {
     ...mapActions(['login']),
+    initGoogleOAuth() {
+      if (window && window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id: '284772421623-8klntslq83finkqcgee2d3bi08rj7kt0.apps.googleusercontent.com',
+          ux_mode: 'popup',
+          callback: this.login,
+          scope: 'profile email',
+        });
+
+        setTimeout(() => {
+          console.log('Rendering Google Auth button');
+          window.google.accounts.id.renderButton(
+            document.getElementById('login-button'),
+            { theme: 'outline', size: 'large' }, // customization attributes
+          );
+          console.log("Button rendered, refresh your browser if you can't see it");
+        }, 200);
+
+        // window.google.accounts.id.prompt();
+      }
+    },
+  },
+
+  data() {
+    return {
+      GoogleOAuth: null,
+    };
   },
 });
 </script>
