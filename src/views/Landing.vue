@@ -45,10 +45,14 @@ export default defineComponent({
         scope: 'profile email',
       });
 
-      window.google.accounts.id.renderButton(
-        document.getElementById('login-button'),
-        { theme: 'outline', size: 'large' }, // customization attributes
-      );
+      setTimeout(() => {
+        console.log('Rendering Google Auth button');
+        window.google.accounts.id.renderButton(
+          document.getElementById('login-button'),
+          { theme: 'outline', size: 'large' }, // customization attributes
+        );
+        console.log("Button rendered, refresh your browser if you can't see it");
+      }, 200);
 
       // window.google.accounts.id.prompt();
     }
