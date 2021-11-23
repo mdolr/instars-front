@@ -96,8 +96,8 @@ export default defineComponent({
       window.onscroll = async () => {
         let bottomOfWindow =
           Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) +
-            window.innerHeight ===
-          document.documentElement.offsetHeight;
+            window.innerHeight >=
+          (document.documentElement.offsetHeight - 0.1);
 
         if (bottomOfWindow && !fetching) {
           fetching = true;
