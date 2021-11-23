@@ -18,9 +18,48 @@
       <h3 style="color: white; font-weight: 400">
         Join thousands of space enthusiasts from around the Earth!<br />Get started now by connecting with Google!
       </h3>
+      <div class="mt-2" id="login-button"></div>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { mapActions, mapGetters } from 'vuex';
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
+window.google = window.google || {};
+
+export default defineComponent({
+  mounted() {
+    if (window && window.google && window.google.accounts) {
+      window.google.accounts.id.initialize({
+        client_id: '284772421623-8klntslq83finkqcgee2d3bi08rj7kt0.apps.googleusercontent.com',
+        ux_mode: 'popup',
+        callback: this.login,
+        scope: 'profile email',
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('login-button'),
+        { theme: 'outline', size: 'large' }, // customization attributes
+      );
+
+      // window.google.accounts.id.prompt();
+    }
+  },
+
+  methods: {
+    ...mapActions(['login']),
+    ...mapGetters(['isLoggedIn', 'getUser']),
+  },
+});
+</script>
 
 <style scoped>
 /*

@@ -2,8 +2,6 @@
   <v-bottom-navigation grow bg-color="black">
     <v-btn tag="router-link" to="/home"> <Saturn /><span>Home</span> </v-btn>
     <v-btn tag="router-link" to="/explore"> <Observatory /><span>Explore</span> </v-btn>
-    <v-btn v-if="!isLoggedIn()"><div id="login-bottom"></div></v-btn>
-    <v-btn v-else> <v-icon>mdi-account</v-icon> <span>Profile</span> </v-btn>
   </v-bottom-navigation>
 </template>
 
@@ -28,34 +26,8 @@ import { mapActions, mapGetters } from 'vuex';
 import Observatory from '../CustomIcon/Observatory.vue';
 import Saturn from '../CustomIcon/Saturn.vue';
 
-declare global {
-  interface Window {
-    google: any;
-  }
-}
-
-window.google = window.google || {};
-
 export default defineComponent({
   components: { Observatory, Saturn },
-
-  mounted() {
-    if (window && window.google && window.google.accounts) {
-      window.google.accounts.id.initialize({
-        client_id: '284772421623-8klntslq83finkqcgee2d3bi08rj7kt0.apps.googleusercontent.com',
-        ux_mode: 'popup',
-        callback: this.login,
-        scope: 'profile email',
-      });
-
-      window.google.accounts.id.renderButton(
-        document.getElementById('login-bottom'),
-        { theme: 'outline', size: 'large', type: 'icon' }, // customization attributes
-      );
-
-      // window.google.accounts.id.prompt();
-    }
-  },
 
   methods: {
     ...mapActions(['login']),

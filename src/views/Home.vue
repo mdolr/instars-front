@@ -43,8 +43,6 @@ import { mapGetters } from 'vuex';
 import Observatory from '@/components/CustomIcon/Observatory.vue';
 import TimelinePost from '@/components/Posts/TimelinePost.vue';
 
-//import TimelinePost from '@/components/Posts/TimelinePost.vue';
-
 export default defineComponent({
   name: 'Home',
 
