@@ -1,33 +1,31 @@
 <template>
   <v-container justify="center" align="center" style="margin-top: 12px">
-    <div style="margin: auto; width: 100%; max-width: 600px">
-      <div style="display: flex; flex-direction: row; align-items: start; justify-content: center">
-        <div style="display: flex; flex-direction: row; align-items: start">
-          <v-img
-            :lazy-src="this.user.pictureURL"
-            max-height="96px"
-            max-width="96px"
-            :src="this.user.pictureURL"
-            style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black;"
-          ></v-img>
+
+    <div class="mt-5" style="display: flex; flex-direction: row; align-items: start; justify-content: center">
+      <div style="display: flex; flex-direction: row; align-items: start">
+        <v-img
+          :lazy-src="this.user.pictureURL"
+          max-height="96px"
+          max-width="96px"
+          :src="this.user.pictureURL"
+          style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black;"
+        ></v-img>
+      </div>
+      <div class="ml-4" style="display: flex; flex-direction: column; align-items: start">
+        <div style="display: flex; flex-direction: column; align-items: start; text-align: start;">
+          <h1 style="margin-bottom: -8px">{{this.user.name}}</h1>
+          <span class="text-grey-darken-3">@{{this.user.handle}}</span>
         </div>
-        <div class="ml-4" style="display: flex; flex-direction: column; align-items: start">
-          <div style="display: flex; flex-direction: row; align-items: end">
-            <h1 style="margin-bottom: -8px">{{this.user.name}}</h1>
-            <span class="text-grey-darken-3 ml-2">@{{this.user.handle}}</span>
-          </div>
-          <div
-            class="account-stats"
-            style="margin-left: -12px; display: flex; flex-direction: row; align-items: center; justify-content: start"
-          >
-            <span><v-icon small>mdi-account-group</v-icon> {{this.user.followers}} Followers</span>
-            <div class="account-buttons">
-              <v-btn
-                size="small"
-                icon="mdi-account-plus"
-              />
-            </div>
-          </div>
+        <div
+          class="account-stats mt-2"
+          style="display: flex; flex-direction: row; align-items: center; justify-content: start"
+        >
+        <div class="account-buttons">
+          <v-btn size="small">
+            Follow
+          </v-btn>
+        </div>
+        <span><v-icon small>mdi-account-group</v-icon> {{this.user.followers}} Followers</span>
         </div>
       </div>
     </div>
@@ -46,6 +44,13 @@
   color: white;
 }
 
+h1 {
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;    
+}
+
 .account-stats span {
   margin-left: 12px;
   display: inline-block;
@@ -57,26 +62,42 @@
 }
 
 .account-buttons .v-btn {
-  margin-left: 6px;
   color: black;
 }
 
 .account-buttons .v-btn .v-icon {
-  margin-right: 4px;
   color: black;
 }
 
 .account-posts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap:20px;
+  padding: 20px;
 }
 
-.account-posts > div {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
+.account-posts .v-card {
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .account-posts { grid-template-columns: repeat(2, 1fr); }
+
+  h1 {
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+  }
+}
+
+@media (min-width: 900px) {
+  .account-posts { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1600px) {
+  .account-posts { grid-template-columns: repeat(5, 1fr); }
 }
 </style>
 

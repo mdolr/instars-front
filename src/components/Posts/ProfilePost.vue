@@ -1,8 +1,8 @@
 <template>
-  <v-card elevation="2" class="mt-10" style="border-radius: 12px; background-color: rgb(23, 25, 35); color: white">
+  <v-card elevation="2" style="border-radius: 12px; background-color: rgb(23, 25, 35); color: white">
     <div style="display: flex; flex-direction: column; align-items: center">
       <div style="background-color: black; width: 100%; display: flex; justify-content: center">
-        <v-img cover :lazy-src="data.mediaURL" :src="data.mediaURL" style="height:400px;width:400px;background-color: black; min-width: 100%" />
+        <v-img cover :lazy-src="data.mediaURL" :src="data.mediaURL" style="max-height:300px;background-color: black; min-width: 100%" />
      </div>
       <v-divider style="width: 100%" />
 
@@ -13,11 +13,9 @@
           </p>
         </div>
         <div style="display: flex; flex-direction: row; align-items: center; width: 100%" class="mt-4">
-          <div style="margin-left: auto; margin-right: auto">
-            <span color="grey" style="color: #808080; font-size: 12px"
-              ><i>{{ formattedDate }}</i></span
-            >
-          </div>
+          <span color="grey" style="color: #808080; font-size: 12px"
+            ><i>{{ formattedDate }}</i></span
+          >
           <div style="margin-left: auto; align-items: center; display: flex">
             <span style="font-weight: 700">
               {{ data.likes }}&nbsp;<v-btn icon @click="likePost"
@@ -80,5 +78,9 @@ export default {
   border: none !important;
   box-shadow: none !important;
   margin: auto;
+}
+
+.v-img{
+  max-height: 300px;
 }
 </style>
