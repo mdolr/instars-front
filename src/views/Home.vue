@@ -100,7 +100,7 @@ export default defineComponent({
           Math.ceil(
             Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) +
               window.innerHeight,
-          ) === document.documentElement.offsetHeight;
+          ) >= document.documentElement.offsetHeight;
         if (bottomOfWindow && !fetching) {
           fetching = true;
           try {
