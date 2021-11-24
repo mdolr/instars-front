@@ -1,9 +1,9 @@
 <template>
-  <v-bottom-navigation grow bg-color="black">
+  <v-bottom-navigation v-if="isLoggedIn()" grow bg-color="black">
     <v-btn tag="router-link" to="/home"> <Saturn /><span>Home</span> </v-btn>
     <v-btn tag="router-link" to="/explore"> <Observatory /><span>Explore</span> </v-btn>
     <v-btn tag="router-link" to="/profile/me"> <Astronaut /><span>Profile</span> </v-btn>
-    <v-btn v-if="isLoggedIn()" @click="logout"> <v-icon>mdi-account-remove</v-icon><span>Log out</span> </v-btn>
+    <v-btn @click="logout"> <v-icon>mdi-account-remove</v-icon><span>Log out</span> </v-btn>
   </v-bottom-navigation>
 </template>
 

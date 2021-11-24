@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app fixed color="black">
+  <v-app-bar v-if="isLoggedIn()" app fixed color="black">
     <v-container class="py-0 fill-height d-flex align-center">
       <div>
         <v-btn tag="router-link" to="/home" style="color: white">
@@ -20,7 +20,7 @@
         </v-btn>-->
       </div>
 
-      <div v-if="isLoggedIn()" style="display: flex; margin-left: auto; align-items: center; padding-right: 6px">
+      <div style="display: flex; margin-left: auto; align-items: center; padding-right: 6px">
         <div class="mr-2 d-flex flex-column ml-auto text-right">
           <span style="color: white">{{ getUser().name }}</span
           ><span style="color: lightgrey; font-size: 12px; margin-top: -6px">@{{ getUser().handle }}</span>

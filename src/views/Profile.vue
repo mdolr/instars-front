@@ -109,6 +109,8 @@ export default defineComponent({
   async mounted() {
       if ((this as any).isLoggedIn()) {
         this.loadProfile();
+      } else {
+        (this as any).$router.push('/');
       }
     },
 
