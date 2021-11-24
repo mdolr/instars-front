@@ -35,6 +35,9 @@
           <Observatory />&nbsp;Explore
         </v-btn>
       </div>
+      <div v-show="fetching" style="color: white;text-align: center;height: 100px;justify-content: center;align-items: center;display: flex;">
+        LOADING
+      </div>
     </div>
   </v-container>
 </template>
@@ -64,6 +67,7 @@ export default defineComponent({
       after: '',
       posts: [],
       uploading: false,
+      fetching: false,
     };
   },
 
@@ -108,15 +112,15 @@ export default defineComponent({
     },
 
     scrollDetector() {
-      let fetching = false;
+      
       window.onscroll = async () => {
         let bottomOfWindow =
           Math.ceil(
             Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) +
               window.innerHeight,
           ) >= document.documentElement.offsetHeight;
-        if (bottomOfWindow && !fetching) {
-          fetching = true;
+        if (bottomOfWindow && !this.fetching) {
+          this.fetching = true;
           try {
             const data = await (this as any).getPosts((this as any)?.after);
 
@@ -133,9 +137,9 @@ export default defineComponent({
               (this as any).after = data.next;
             }
 
-            fetching = false;
+            this.fetching = false;
           } catch (e) {
-            fetching = false;
+            this.fetching = false;
             console.error(e);
           }
         }

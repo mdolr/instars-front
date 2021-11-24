@@ -13,16 +13,21 @@
           </p>
         </div>
         <div style="display: flex; flex-direction: row; align-items: center; width: 100%" class="mt-4">
-          <img :src="data.author.pictureURL" height="36" width="36" style="border-radius: 50%" />
-          <div style="display: flex; flex-direction: column">
-            <h4 class="ml-2" style="margin-bottom: -6px">{{ data.author.name }}</h4>
-            <span class="ml-2" style="color: grey; font-size: 12px">@{{ data.author.handle }}</span>
-          </div>
+          
+          <router-link :to="'/profile/'+data.author.handle" style="display: flex; text-decoration:none;">
+            <img :src="data.author.pictureURL" height="36" width="36" style="border-radius: 50%" />
+            <div style="display: flex; flex-direction: column; color:white;">
+              <h4 class="ml-2" style="margin-bottom: -6px">{{ data.author.name }}</h4>
+              <span class="ml-2" style="color: grey; font-size: 12px">@{{ data.author.handle }}</span>
+            </div>
+          </router-link>
+
           <div style="margin-left: auto; margin-right: auto">
             <span color="grey" style="color: #808080; font-size: 12px"
               ><i>{{ formattedDate }}</i></span
             >
           </div>
+          
           <div style="margin-left: auto; align-items: center; display: flex">
             <span style="font-weight: 700">
               {{ data.likes }}&nbsp;<v-btn icon @click="likePost"

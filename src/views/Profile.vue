@@ -4,53 +4,48 @@
       <div style="display: flex; flex-direction: row; align-items: start; justify-content: center">
         <div style="display: flex; flex-direction: row; align-items: start">
           <v-img
-            lazy-src="https://cdn.discordapp.com/attachments/556951502137065518/900806259228422154/drifterFace.PNG"
+            :lazy-src="this.user.pictureURL"
             max-height="96px"
             max-width="96px"
-            src="https://cdn.discordapp.com/attachments/556951502137065518/900806259228422154/drifterFace.PNG"
-            style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black"
+            :src="this.user.pictureURL"
+            style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black;"
           ></v-img>
         </div>
         <div class="ml-4" style="display: flex; flex-direction: column; align-items: start">
           <div style="display: flex; flex-direction: row; align-items: end">
-            <h1 style="margin-bottom: -8px">Maxime</h1>
-            <span class="text-grey-darken-3 ml-2">@mdolr</span>
+            <h1 style="margin-bottom: -8px">{{this.user.name}}</h1>
+            <span class="text-grey-darken-3 ml-2">@{{this.user.handle}}</span>
           </div>
           <div
             class="account-stats"
             style="margin-left: -12px; display: flex; flex-direction: row; align-items: center; justify-content: start"
           >
-            <span><v-icon small>mdi-account-group</v-icon> 127 000 Followers</span>
-            <span><v-icon x-small>mdi-camera</v-icon> 323 Pictures</span>
-            <span class="text-purple"
-              ><v-icon x-large color="purple">mdi-calendar-multiple-check</v-icon> <strong>PERFECT!</strong></span
-            >
+            <span><v-icon small>mdi-account-group</v-icon> {{this.user.followers}} Followers</span>
+            <div class="account-buttons">
+              <v-btn
+                size="small"
+                icon="mdi-account-plus"
+              />
+            </div>
           </div>
-          <p style="text-align: left; margin-top: 6px">
-            Mon super profil avec une description multi-ligne de folie que tout le monde adore lire avec une limite de
-            280 caractères???
-          </p>
         </div>
       </div>
     </div>
 
     <br />
-    <div class="account-buttons">
-      <v-btn><v-icon>mdi-account-plus</v-icon>Follow</v-btn>
-      <v-btn><v-icon>mdi-clock</v-icon>Timelapse</v-btn>
-      <v-btn><v-icon>mdi-share</v-icon>Share</v-btn>
-    </div>
-    <br />
     <v-divider />
     <br />
     <div class="account-posts">
-      <ProfilePost v-for="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="n" />
+      <ProfilePost v-for="post in posts" :key="post.id" :data="post" />
     </div>
-    <!--<ProfilePost v-for="posts in user.posts"/>-->
   </v-container>
 </template>
 
 <style scoped>
+*{
+  color: white;
+}
+
 .account-stats span {
   margin-left: 12px;
   display: inline-block;
@@ -63,10 +58,12 @@
 
 .account-buttons .v-btn {
   margin-left: 6px;
+  color: black;
 }
 
 .account-buttons .v-btn .v-icon {
   margin-right: 4px;
+  color: black;
 }
 
 .account-posts {
@@ -79,16 +76,67 @@
 .account-posts > div {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 24px;
+  margin-bottom: 50px;
 }
 </style>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
+import { mapActions, mapGetters } from 'vuex';
 import ProfilePost from '@/components/Posts/ProfilePost.vue';
+import axios from '@/plugins/axios';
 
-export default {
+export default defineComponent({
+  name: 'Home',
+
   components: {
     ProfilePost,
   },
-};
+
+  data() {
+    return {
+      user: "",
+      posts: [] as any,
+    };
+  },
+  
+  watch:{
+      $route (){//Update profile on route change
+        this.loadProfile();
+      }
+  },
+
+  async mounted() {
+      if ((this as any).isLoggedIn()) {
+        this.loadProfile();
+      }
+    },
+
+  methods: {
+    ...mapActions(['login', 'logout']),
+    ...mapGetters(['isLoggedIn', 'getUser']),
+
+    async loadProfile(){
+        if(this.$route.params.profile_handler === "me") {
+          this.user = this.getUser()
+        }
+
+        else if(this.$route.params.profile_handler){
+          this.user = await this.getUserId(this.$route.params.profile_handler as string);
+        }
+
+        this.posts = await this.getUserPosts(this.user);
+    },
+
+    async getUserId(handle: string) {
+      const data = await axios.get(`/users/handle/${handle}`);
+      return data.data;
+    },
+
+    async getUserPosts(user: any) {
+      const data = await axios.get(`/posts/${user.id}`);
+      return data.data.items;
+    },
+  }
+});
 </script>

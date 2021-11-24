@@ -6,11 +6,15 @@
   >
     <v-container justify="center" align="center">
       <div style="display: flex; flex-direction: row; align-items: center; width: 100%">
-        <img :src="data.pictureURL" height="36" width="36" style="border-radius: 50%" />
-        <div class="ml-2" style="display: flex; flex-direction: column; text-align: left">
-          <h4 style="margin-bottom: -6px">{{ data.name }}</h4>
-          <span style="color: grey; font-size: 12px">@{{ data.handle }}</span>
-        </div>
+        
+        <router-link :to="'/profile/'+data.handle" style="display: flex; text-decoration:none;">
+          <img :src="data.pictureURL" height="36" width="36" style="border-radius: 50%" />
+          <div class="ml-2" style="display: flex; flex-direction: column; text-align: left; color:white;">
+            <h4 style="margin-bottom: -6px">{{ data.name }}</h4>
+            <span style="color: grey; font-size: 12px">@{{ data.handle }}</span>
+          </div>
+        </router-link>
+
         <div style="margin-left: auto; align-items: center; display: flex">
           <span style="font-weight: 700">
             {{ data.followers }}&nbsp;<v-btn icon @click="followUser"

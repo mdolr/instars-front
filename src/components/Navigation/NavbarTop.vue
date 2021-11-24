@@ -10,6 +10,10 @@
           <!--@click="logIn"-->
           <Observatory />&nbsp;Explore
         </v-btn>
+        <v-btn tag="router-link" to="/profile/me"  style="color: white">
+          <!--@click="logIn"-->
+          <Astronaut />&nbsp;Profile
+        </v-btn>
 
         <!--<v-btn icon>
           <v-icon color="white"> mdi-star </v-icon>
@@ -46,9 +50,10 @@ import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import Observatory from '../CustomIcon/Observatory.vue';
 import Saturn from '../CustomIcon/Saturn.vue';
+import Astronaut from '../CustomIcon/Astronaut.vue';
 
 export default defineComponent({
-  components: { Saturn, Observatory },
+  components: { Saturn, Observatory, Astronaut },
 
   methods: {
     ...mapActions(['login', 'logout']),

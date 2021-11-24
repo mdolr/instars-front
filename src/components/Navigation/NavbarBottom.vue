@@ -2,6 +2,7 @@
   <v-bottom-navigation grow bg-color="black">
     <v-btn tag="router-link" to="/home"> <Saturn /><span>Home</span> </v-btn>
     <v-btn tag="router-link" to="/explore"> <Observatory /><span>Explore</span> </v-btn>
+    <v-btn tag="router-link" to="/profile/me"> <Astronaut /><span>Profile</span> </v-btn>
     <v-btn v-if="isLoggedIn()" @click="logout"> <v-icon>mdi-account-remove</v-icon><span>Log out</span> </v-btn>
   </v-bottom-navigation>
 </template>
@@ -26,9 +27,10 @@ import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import Observatory from '../CustomIcon/Observatory.vue';
 import Saturn from '../CustomIcon/Saturn.vue';
+import Astronaut from '../CustomIcon/Astronaut.vue';
 
 export default defineComponent({
-  components: { Observatory, Saturn },
+  components: { Observatory, Saturn, Astronaut },
 
   methods: {
     ...mapActions(['login', 'logout']),

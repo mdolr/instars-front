@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Explore,
   },
   {
-    path: '/:profile_handle',
+    path: '/profile/:profile_handler',
     name: 'Profile',
     meta: { layout: 'LayoutApp' },
     component: Profile,
