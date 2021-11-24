@@ -2,17 +2,20 @@
   <v-container align="center" justify="center">
     <div class="timeline-container">
       <div class="new-post-container">
-        <textarea v-model="description" class="message-input" placeholder="Send your thoughts to space!"></textarea>
+        <textarea
+          v-if="getUser()?.followers"
+          v-model="description"
+          class="message-input"
+          :placeholder="placeholderText"
+        ></textarea>
 
         <div class="buttons">
           <input type="file" id="fileInput" ref="inputFile" @change="updateFile" />
           <v-btn tag="label" for="fileInput" style="color: white">
-            <!--@click="logIn"-->
             <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
           </v-btn>
 
           <v-btn @click="createPost" :disabled="uploading" style="color: white; background-color: black">
-            <!--@click="logIn"-->
             <Satellite />&nbsp;Broadcast
           </v-btn>
         </div>
@@ -27,7 +30,6 @@
           You should <strong>explore</strong> some more to find new posts!
         </h4>
         <v-btn tag="router-link" to="/explore" class="mt-2" style="color: white; background-color: rgb(23, 25, 35)">
-          <!--@click="logIn"-->
           <Observatory />&nbsp;Explore
         </v-btn>
       </div>
@@ -39,7 +41,7 @@
 import Satellite from '@/components/CustomIcon/Satellite.vue';
 import { defineComponent } from 'vue';
 import axios from '@/plugins/axios';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Observatory from '@/components/CustomIcon/Observatory.vue';
 import TimelinePost from '@/components/Posts/TimelinePost.vue';
 
@@ -65,7 +67,8 @@ export default defineComponent({
 
   async mounted() {
     if ((this as any).isLoggedIn()) {
-      const data = await this.getPosts('');
+      (this as any).retrieveUser();
+      const data = await (this as any).getPosts('');
 
       if (data?.items?.length) {
         (this as any).posts = data.items;
@@ -76,19 +79,28 @@ export default defineComponent({
       (this as any).$router.push('/');
     }
 
-    this.scrollDetector();
+    (this as any).scrollDetector();
   },
 
-  computed: {},
+  computed: {
+    placeholderText() {
+      return `Share your thoughts with ${
+        (this as any).getUser().followers > 0
+          ? 'your ' + (this as any).getUser().followers + ' fellow astronauts!'
+          : 'space!'
+      }`;
+    },
+  },
 
   methods: {
     ...mapGetters(['isLoggedIn', 'getUser']),
+    ...mapActions(['retrieveUser']),
 
     updateFile(e: any) {
       if (e?.target?.files?.[0]) {
-        this.file = e.target.files[0];
+        (this as any).file = e.target.files[0];
       } else {
-        this.file = null;
+        (this as any).file = null;
         (window as any).document.getElementById('fileInput').value = null;
       }
     },
@@ -104,7 +116,7 @@ export default defineComponent({
         if (bottomOfWindow && !fetching) {
           fetching = true;
           try {
-            const data = await this.getPosts((this as any)?.after);
+            const data = await (this as any).getPosts((this as any)?.after);
 
             if (data?.items?.length) {
               // merge (this as any).posts with data.items
@@ -137,24 +149,24 @@ export default defineComponent({
     },
 
     async bulkCreatePost(count: number) {
-      this.description = `Post`;
+      (this as any).description = `Post`;
 
-      if (this.file && this?.description.length > 0) {
+      if ((this as any).file && (this as any)?.description.length > 0) {
         for (let i = 0; i < count; i++) {
-          this.description = `Post ${i}`;
-          await this.createPost();
+          (this as any).description = `Post ${i}`;
+          await (this as any).createPost();
         }
       }
     },
 
     async createPost() {
-      if (this.file && this?.description.length > 0) {
-        this.uploading = true;
+      if ((this as any).file && (this as any)?.description.length > 0) {
+        (this as any).uploading = true;
         try {
           const post = await axios.post('/posts', {
             fileName: (this as any).file.name,
             fileType: (this as any).file.type,
-            description: this.description,
+            description: (this as any).description,
           });
 
           if ((post as any)?.data?.uploadURL) {
@@ -163,15 +175,15 @@ export default defineComponent({
               headers: {
                 'Content-Type': 'image/png',
               },
-              body: this.file,
+              body: (this as any).file,
             });
 
             const publishedPost = await axios.post(`/posts/${(post as any)?.data?.id}/publish`);
 
-            this.description = '';
-            this.updateFile(null);
+            (this as any).description = '';
+            (this as any).updateFile(null);
 
-            const data = await this.getPosts('');
+            const data = await (this as any).getPosts('');
 
             if (data?.items?.length) {
               (this as any).posts = data.items;
@@ -179,11 +191,11 @@ export default defineComponent({
               (this as any).after = data.next;
             }
 
-            this.uploading = false;
+            (this as any).uploading = false;
             return publishedPost;
           }
         } catch (e) {
-          this.uploading = false;
+          (this as any).uploading = false;
           console.error(e);
           return e;
         }
