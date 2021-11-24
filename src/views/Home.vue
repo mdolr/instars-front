@@ -11,7 +11,7 @@
             <v-icon>mdi-paperclip</v-icon>&nbsp;{{ file ? file.name : 'Attach' }}
           </v-btn>
 
-          <v-btn @click="createPost" style="color: white; background-color: black">
+          <v-btn @click="createPost" :disabled="uploading" style="color: white; background-color: black">
             <!--@click="logIn"-->
             <Satellite />&nbsp;Broadcast
           </v-btn>
@@ -59,6 +59,7 @@ export default defineComponent({
       before: '',
       after: '',
       posts: [],
+      uploading: false,
     };
   },
 
@@ -148,6 +149,7 @@ export default defineComponent({
 
     async createPost() {
       if (this.file && this?.description.length > 0) {
+        this.uploading = true;
         try {
           const post = await axios.post('/posts', {
             fileName: (this as any).file.name,
@@ -177,9 +179,11 @@ export default defineComponent({
               (this as any).after = data.next;
             }
 
+            this.uploading = false;
             return publishedPost;
           }
         } catch (e) {
+          this.uploading = false;
           console.error(e);
           return e;
         }
