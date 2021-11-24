@@ -2,7 +2,7 @@
   <v-card elevation="2" class="mt-10" style="border-radius: 12px; background-color: rgb(23, 25, 35); color: white">
     <div style="display: flex; flex-direction: column; align-items: center">
       <div style="background-color: black; width: 100%; display: flex; justify-content: center">
-        <img :src="data.mediaURL" style="background-color: black; min-width: 100%" />
+        <v-img :lazy-src="data.mediaURL" :src="data.mediaURL" style="background-color: black; min-width: 100%" />
       </div>
       <v-divider style="width: 100%" />
 
