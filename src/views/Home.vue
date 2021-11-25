@@ -152,10 +152,12 @@ export default defineComponent({
 
     async bulkCreatePost(count: number) {
       (this as any).description = `Post`;
+      const file = (this as any).file;
 
       if ((this as any).file && (this as any)?.description.length > 0) {
         for (let i = 0; i < count; i++) {
           (this as any).description = `Post ${i}`;
+          (this as any).file = file;
           await (this as any).createPost();
         }
       }
