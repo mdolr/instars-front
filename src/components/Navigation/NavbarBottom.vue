@@ -34,7 +34,7 @@ export default defineComponent({
 
   methods: {
     ...mapActions(['login', 'logout']),
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters(['isLoggedIn', 'getUser']),
   },
 });
 </script>
