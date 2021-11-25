@@ -146,14 +146,7 @@ export default defineComponent({
     ...mapGetters(['isLoggedIn', 'getUser']),
 
     async loadProfile() {
-      if (this.$route.params.profile_handler === 'me') {
-        this.user = this.getUser();
-      } else if (this.$route.params.profile_handler === this.getUser().handle) {
-        (this as any).$router.push('/profile/me');
-      } else if (this.$route.params.profile_handler) {
-        this.user = await this.getUserId(this.$route.params.profile_handler as string);
-      }
-
+      this.user = await this.getUserId(this.$route.params.profile_handler as string);
       this.posts = await this.getUserPosts(this.user);
     },
 

@@ -10,7 +10,7 @@
           <!--@click="logIn"-->
           <Observatory />&nbsp;Explore
         </v-btn>
-        <v-btn tag="router-link" to="/profile/me"  style="color: white">
+        <v-btn tag="router-link" :to="'/profile/'+getUser().handle"  style="color: white">
           <!--@click="logIn"-->
           <Astronaut />&nbsp;Profile
         </v-btn>
