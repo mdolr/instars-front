@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="2" style="border-radius: 12px; background-color: rgb(23, 25, 35); color: white">
-    <div style="display: flex; flex-direction: column; align-items: center">
-      <div style="background-color: black; width: 100%; display: flex; justify-content: center">
+    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; width: 100%">
+      <div style="background-color: black; width: 100%; height: 100%; display: flex; justify-content: center">
         <v-img
           cover
           :lazy-src="data.mediaURL"
