@@ -2,8 +2,13 @@
   <v-card elevation="2" style="border-radius: 12px; background-color: rgb(23, 25, 35); color: white">
     <div style="display: flex; flex-direction: column; align-items: center">
       <div style="background-color: black; width: 100%; display: flex; justify-content: center">
-        <v-img cover :lazy-src="data.mediaURL" :src="data.mediaURL" style="max-height:300px;background-color: black; min-width: 100%" />
-     </div>
+        <v-img
+          cover
+          :lazy-src="data.mediaURL"
+          :src="data.mediaURL"
+          style="max-height: 300px; background-color: black; min-width: 100%"
+        />
+      </div>
       <v-divider style="width: 100%" />
 
       <div style="padding: 12px 24px 24px 24px; display: flex; align-items: start; flex-direction: column; width: 100%">
@@ -46,13 +51,13 @@ export default {
   },
 
   computed: {
-    formattedDate() {
+    formattedDate(): string {
       return moment((this as any).data.createdAt).format('DD/MM/YYYY hh:mm:ss');
     },
   },
 
   methods: {
-    async likePost() {
+    async likePost(): Promise<boolean> {
       const res = await axios.post(`/posts/${(this as any).data.id}/likes`);
 
       (this as any).data.hasLiked = res.data.hasLiked;
@@ -80,7 +85,7 @@ export default {
   margin: auto;
 }
 
-.v-img{
+.v-img {
   max-height: 300px;
 }
 </style>
