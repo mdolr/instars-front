@@ -1,31 +1,30 @@
 <template>
   <v-container justify="center" align="center" style="margin-top: 12px">
-
     <div class="mt-5" style="display: flex; flex-direction: row; align-items: start; justify-content: center">
       <div style="display: flex; flex-direction: row; align-items: start">
         <v-img
-          :lazy-src="this.user.pictureURL"
+          :lazy-src="user.pictureURL"
           max-height="96px"
           max-width="96px"
-          :src="this.user.pictureURL"
-          style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black;"
+          :src="user.pictureURL"
+          style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black"
         ></v-img>
       </div>
       <div class="ml-4" style="display: flex; flex-direction: column; align-items: start">
-        <div style="display: flex; flex-direction: column; align-items: start; text-align: start;">
-          <h1 style="margin-bottom: -8px">{{this.user.name}}</h1>
-          <span class="text-grey-darken-3">@{{this.user.handle}}</span>
+        <div style="display: flex; flex-direction: column; align-items: start; text-align: start">
+          <h1 style="margin-bottom: -8px">{{ user.name }}</h1>
+          <span class="text-grey-darken-1">@{{ user.handle }}</span>
         </div>
         <div
           class="account-stats mt-2"
           style="display: flex; flex-direction: row; align-items: center; justify-content: start"
         >
-        <div class="account-buttons">
-          <v-btn size="small">
-            Follow
-          </v-btn>
-        </div>
-        <span><v-icon small>mdi-account-group</v-icon> {{this.user.followers}} Followers</span>
+          <div v-if="getUser().handle != user.handle" class="account-buttons mr-4">
+            <v-btn size="small" @click="followUser" :color="user.hasFollowed ? 'blue' : 'lightgrey'">
+              {{ user.hasFollowed ? 'Followed' : 'Follow' }}
+            </v-btn>
+          </div>
+          <v-icon class="mr-2" small>mdi-account-group</v-icon> {{ user.followers }} Followers
         </div>
       </div>
     </div>
@@ -40,7 +39,7 @@
 </template>
 
 <style scoped>
-*{
+* {
   color: white;
 }
 
@@ -48,7 +47,7 @@ h1 {
   width: 240px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;    
+  text-overflow: ellipsis;
 }
 
 .account-stats span {
@@ -72,7 +71,7 @@ h1 {
 .account-posts {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-gap:20px;
+  grid-gap: 20px;
   padding: 20px;
 }
 
@@ -82,22 +81,28 @@ h1 {
 }
 
 @media (min-width: 600px) {
-  .account-posts { grid-template-columns: repeat(2, 1fr); }
+  .account-posts {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   h1 {
     width: 400px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
   }
 }
 
 @media (min-width: 900px) {
-  .account-posts { grid-template-columns: repeat(3, 1fr); }
+  .account-posts {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 1600px) {
-  .account-posts { grid-template-columns: repeat(5, 1fr); }
+  .account-posts {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 </style>
 
@@ -116,39 +121,40 @@ export default defineComponent({
 
   data() {
     return {
-      user: "",
+      user: '',
       posts: [] as any,
     };
   },
-  
-  watch:{
-      $route (){//Update profile on route change
-        this.loadProfile();
-      }
+
+  watch: {
+    $route() {
+      //Update profile on route change
+      this.loadProfile();
+    },
   },
 
   async mounted() {
-      if ((this as any).isLoggedIn()) {
-        this.loadProfile();
-      } else {
-        (this as any).$router.push('/');
-      }
-    },
+    if ((this as any).isLoggedIn()) {
+      this.loadProfile();
+    } else {
+      (this as any).$router.push('/');
+    }
+  },
 
   methods: {
     ...mapActions(['login', 'logout']),
     ...mapGetters(['isLoggedIn', 'getUser']),
 
-    async loadProfile(){
-        if(this.$route.params.profile_handler === "me") {
-          this.user = this.getUser()
-        }
+    async loadProfile() {
+      if (this.$route.params.profile_handler === 'me') {
+        this.user = this.getUser();
+      } else if (this.$route.params.profile_handler === this.getUser().handle) {
+        (this as any).$router.push('/profile/me');
+      } else if (this.$route.params.profile_handler) {
+        this.user = await this.getUserId(this.$route.params.profile_handler as string);
+      }
 
-        else if(this.$route.params.profile_handler){
-          this.user = await this.getUserId(this.$route.params.profile_handler as string);
-        }
-
-        this.posts = await this.getUserPosts(this.user);
+      this.posts = await this.getUserPosts(this.user);
     },
 
     async getUserId(handle: string) {
@@ -160,6 +166,14 @@ export default defineComponent({
       const data = await axios.get(`/posts/${user.id}`);
       return data.data.items;
     },
-  }
+
+    async followUser() {
+      const res = await axios.post(`/follow/${(this as any).user.id}`);
+
+      (this as any).user.hasFollowed = res.data.hasFollowed;
+      (this as any).user.followers = res.data.followers;
+      return true;
+    },
+  },
 });
 </script>
