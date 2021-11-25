@@ -16,7 +16,9 @@
           </v-btn>
 
           <v-btn @click="createPost" :disabled="uploading" style="color: white; background-color: black">
-            <Satellite />&nbsp;Broadcast
+            <Satellite />&nbsp;Broadcast </v-btn
+          ><v-btn @click="bulkCreatePost(30)" :disabled="uploading" style="color: white; background-color: black">
+            <Satellite />&nbsp;BULK Broadcast
           </v-btn>
         </div>
       </div>
