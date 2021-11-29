@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app fixed color="black">
+  <v-app-bar v-if="isLoggedIn()" app fixed color="black">
     <v-container class="py-0 fill-height d-flex align-center">
       <div>
         <v-btn tag="router-link" to="/home" style="color: white">
@@ -10,13 +10,17 @@
           <!--@click="logIn"-->
           <Observatory />&nbsp;Explore
         </v-btn>
+        <v-btn tag="router-link" :to="'/profile/'+getUser().handle"  style="color: white">
+          <!--@click="logIn"-->
+          <Astronaut />&nbsp;Profile
+        </v-btn>
 
         <!--<v-btn icon>
           <v-icon color="white"> mdi-star </v-icon>
         </v-btn>-->
       </div>
 
-      <div v-if="isLoggedIn()" style="display: flex; margin-left: auto; align-items: center; padding-right: 6px">
+      <div style="display: flex; margin-left: auto; align-items: center; padding-right: 6px">
         <div class="mr-2 d-flex flex-column ml-auto text-right">
           <span style="color: white">{{ getUser().name }}</span
           ><span style="color: lightgrey; font-size: 12px; margin-top: -6px">@{{ getUser().handle }}</span>
@@ -46,9 +50,10 @@ import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import Observatory from '../CustomIcon/Observatory.vue';
 import Saturn from '../CustomIcon/Saturn.vue';
+import Astronaut from '../CustomIcon/Astronaut.vue';
 
 export default defineComponent({
-  components: { Saturn, Observatory },
+  components: { Saturn, Observatory, Astronaut },
 
   methods: {
     ...mapActions(['login', 'logout']),

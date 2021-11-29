@@ -2,7 +2,7 @@
   <v-container align="center" justify="center">
     <div class="timeline-container">
       <div class="posts-container">
-        <ProfileCard v-for="profile in profiles" :key="profile.id" :data="profile" />
+        <ProfileCard v-for="profile in profiles.filter(profile => profile.id != getUser().id)" :key="profile.id" :data="profile"/>
       </div>
     </div>
   </v-container>
