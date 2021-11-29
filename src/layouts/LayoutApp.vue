@@ -1,11 +1,11 @@
 <template>
   <div style="background-color: black">
-    <NavbarTop class="d-none d-md-flex" />
+    <NavbarTop v-if="isLoggedIn()" class="d-none d-md-flex" />
     <v-main>
       <slot />
     </v-main>
     <!--<WritePost />-->
-    <NavbarBottom class="d-md-none" />
+    <NavbarBottom v-if="isLoggedIn()" class="d-md-none" />
   </div>
 </template>
 
@@ -14,13 +14,20 @@ import NavbarTop from '@/components/Navigation/NavbarTop.vue';
 import NavbarBottom from '@/components/Navigation/NavbarBottom.vue';
 //import WritePost from '@/components/Posts/WritePost.vue';
 
-export default {
+import { mapGetters } from 'vuex';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   components: {
     NavbarTop,
     NavbarBottom,
     //WritePost,
   },
-};
+
+  methods: {
+    ...mapGetters(['isLoggedIn']),
+  },
+});
 </script>
 
 <style scoped>
