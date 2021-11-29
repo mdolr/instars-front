@@ -119,8 +119,8 @@ export default defineComponent({
             Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) +
               window.innerHeight,
           ) >= document.documentElement.offsetHeight;
-        if (bottomOfWindow && !this.fetching) {
-          this.fetching = true;
+        if (bottomOfWindow && !(this as any).fetching) {
+          (this as any).fetching = true;
           try {
             const data = await (this as any).getPosts((this as any)?.after);
 
@@ -137,9 +137,9 @@ export default defineComponent({
               (this as any).after = data.next;
             }
 
-            this.fetching = false;
+            (this as any).fetching = false;
           } catch (e) {
-            this.fetching = false;
+            (this as any).fetching = false;
             console.error(e);
           }
         }

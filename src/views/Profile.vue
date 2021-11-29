@@ -2,13 +2,12 @@
   <v-container justify="center" align="center" style="margin-top: 12px">
     <div class="mt-5" style="display: flex; flex-direction: row; align-items: start; justify-content: center">
       <div style="display: flex; flex-direction: row; align-items: start">
-        <v-img
-          :lazy-src="user.pictureURL"
+        <img
           max-height="96px"
           max-width="96px"
           :src="user.pictureURL"
           style="border-radius: 50%; height: 96px; width: 96px; border: solid 0.01em black"
-        ></v-img>
+        />
       </div>
       <div class="ml-4" style="display: flex; flex-direction: column; align-items: start">
         <div style="display: flex; flex-direction: column; align-items: start; text-align: start">
@@ -19,7 +18,7 @@
           class="account-stats mt-2"
           style="display: flex; flex-direction: row; align-items: center; justify-content: start"
         >
-          <div v-if="getUser().handle != user.handle" class="account-buttons mr-4">
+          <div v-if="isLoggedIn() && getUser().handle != user.handle" class="account-buttons mr-4">
             <v-btn size="small" @click="followUser" :color="user.hasFollowed ? 'blue' : 'lightgrey'">
               {{ user.hasFollowed ? 'Followed' : 'Follow' }}
             </v-btn>
@@ -113,7 +112,7 @@ import ProfilePost from '@/components/Posts/ProfilePost.vue';
 import axios from '@/plugins/axios';
 
 export default defineComponent({
-  name: 'Home',
+  name: 'Profile',
 
   components: {
     ProfilePost,

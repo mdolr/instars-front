@@ -30,12 +30,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: { layout: 'LayoutApp' },
     component: Profile,
   },
-  {
-    path: '/settings',
-    name: 'Settings',
-    meta: { layout: 'LayoutApp' },
-    component: Settings,
-  },
 ];
 
 const router = createRouter({

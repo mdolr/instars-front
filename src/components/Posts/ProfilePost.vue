@@ -6,7 +6,7 @@
           cover
           :lazy-src="data.mediaURL"
           :src="data.mediaURL"
-          style="max-height: 300px; background-color: black; min-width: 100%"
+          style="height: 300px; background-color: black; min-width: 100%"
         />
       </div>
       <v-divider style="width: 100%" />
