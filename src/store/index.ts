@@ -41,7 +41,10 @@ export default createStore({
           localStorage.setItem('token', JSON.stringify(credentials.credential));
 
           await dispatch('retrieveUser');
-          router.push('/home');
+
+          if (!(router.currentRoute as any).includes('/profile/')) {
+            router.push('/home');
+          }
         } catch (error) {
           dispatch('logout');
         }
