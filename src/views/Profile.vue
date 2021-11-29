@@ -1,6 +1,10 @@
 <template>
   <v-container justify="center" align="center" style="margin-top: 12px">
-    <div class="mt-5" style="display: flex; flex-direction: row; align-items: start; justify-content: center">
+    <div
+      v-if="user"
+      class="mt-5"
+      style="display: flex; flex-direction: row; align-items: start; justify-content: center"
+    >
       <div style="display: flex; flex-direction: row; align-items: start">
         <img
           max-height="96px"
@@ -122,7 +126,7 @@ export default defineComponent({
 
   data() {
     return {
-      user: '',
+      user: {},
       posts: [] as any,
     };
   },
@@ -137,11 +141,7 @@ export default defineComponent({
   },
 
   async mounted() {
-    if ((this as any).isLoggedIn()) {
-      this.loadProfile();
-    } else {
-      (this as any).$router.push('/');
-    }
+    this.loadProfile();
   },
 
   methods: {
