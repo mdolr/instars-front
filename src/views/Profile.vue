@@ -23,7 +23,9 @@
               {{ user.hasFollowed ? 'Followed' : 'Follow' }}
             </v-btn>
           </div>
-          <v-icon class="mr-2" small>mdi-account-group</v-icon> {{ user.followers }} Followers
+          <v-icon class="mr-2" small>mdi-account-group</v-icon> {{ user.followers }} Follower{{
+            user.followers == 1 ? '' : 's'
+          }}
         </div>
       </div>
     </div>
@@ -127,8 +129,10 @@ export default defineComponent({
 
   watch: {
     $route() {
-      //Update profile on route change
-      this.loadProfile();
+      if (this.$route?.params?.profile_handler) {
+        //Update profile on route change
+        this.loadProfile();
+      }
     },
   },
 

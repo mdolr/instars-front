@@ -35,7 +35,17 @@
           <Observatory />&nbsp;Explore
         </v-btn>
       </div>
-      <div v-show="fetching" style="color: white;text-align: center;height: 100px;justify-content: center;align-items: center;display: flex;">
+      <div
+        v-show="fetching"
+        style="
+          color: white;
+          text-align: center;
+          height: 100px;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+        "
+      >
         LOADING
       </div>
     </div>
@@ -90,9 +100,10 @@ export default defineComponent({
 
   computed: {
     placeholderText() {
+      const followerCount = (this as any).getUser().followers;
       return `Share your thoughts with ${
-        (this as any).getUser().followers > 0
-          ? 'your ' + (this as any).getUser().followers + ' fellow astronauts!'
+        followerCount > 0
+          ? 'your ' + followerCount + ' fellow astronaut' + (followerCount == 1 ? '' : 's') + '!'
           : 'space!'
       }`;
     },
@@ -112,7 +123,6 @@ export default defineComponent({
     },
 
     scrollDetector() {
-      
       window.onscroll = async () => {
         let bottomOfWindow =
           Math.ceil(
