@@ -159,7 +159,7 @@ export default defineComponent({
     },
 
     async getUserPosts(user: any) {
-      const data = await axios.get(`/posts/${user.id}`);
+      const data = await axios.get(`/posts?authorId=${user.id}`);
       return data.data.items;
     },
 
