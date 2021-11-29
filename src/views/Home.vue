@@ -177,7 +177,7 @@ export default defineComponent({
             await fetch((post as any)?.data?.uploadURL, {
               method: 'PUT',
               headers: {
-                'Content-Type': 'image/png',
+                'Content-Type': (this as any).file.type,
               },
               body: (this as any).file,
             });
