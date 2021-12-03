@@ -16,20 +16,16 @@ Requirements:
 git clone https://github.com/mdolr/tinyinsta-front.git
 
 # Go into the directory
-cd tinyinsta-front
+cd instars-front
 
 # Install dependencies
-yarn install
+yarn
 
 # Stat the project
 yarn serve
 ```
 
-The project is available on : [localhost:8080](http://localhost:8080)
-
-### Google Console
-
-WIP
+The project is available on : [localhost:3000](http://localhost:3000)
 
 ## Code-styling
 
@@ -54,4 +50,4 @@ yarn build
 
 ## Deploy
 
-WIP
+Setup deployment workflow by following [this tutorial](https://medium.com/@brian.young.pro/how-to-deploy-vue-js-app-to-google-cloud-with-cloud-build-ad104bb1cf60)
